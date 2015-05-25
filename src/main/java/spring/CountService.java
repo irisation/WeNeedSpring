@@ -7,11 +7,7 @@ import java.util.ArrayList;
 
 public class CountService {
 
-    String folderPath;
-
-    public CountService(String folderPath) {
-        this.folderPath = folderPath;
-    }
+    public String folderPath;
 
     public String getFolderPath() {
         return folderPath;

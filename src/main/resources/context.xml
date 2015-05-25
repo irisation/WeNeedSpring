@@ -7,7 +7,7 @@
 
 
     <bean class="spring.CountService" id="countService">
-        <constructor-arg type="java.lang.String" value="D:\\Students\\"/>
+        <property name="folderPath" value="D:\\Students\\"/>
     </bean>
 
 </beans>

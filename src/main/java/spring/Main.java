@@ -29,10 +29,6 @@ public class Main {
         for (int i = 0; i < array.size(); i++) {
             System.out.println(array.get(i).wordsCount + " " + array.get(i).topTen);
         }
-//        WordsContainer text = (WordsContainer) ctx.getBean("wordsContainer");
-//        controller.countWordsInFile(text);
-
-
 
 
     }

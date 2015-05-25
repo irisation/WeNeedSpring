@@ -9,7 +9,10 @@ import java.util.*;
 
 public class Counter {
 
-    enum Prepositions {on, in, at, since, ago, before, to, past, till, until, by, under, below, over, above, across, through, into, towards, onto, from, off, about, of}
+    enum Prepositions {
+        on, in, at, since, ago, before, to, past, till, until, by, under, below, over, above, across,
+        through, into, towards, onto, from, off, about, of
+    }
 
     String storageType;
     String filePath;
@@ -28,7 +31,7 @@ public class Counter {
         String line = in.readLine();
         String[] words;
         while (line != null) {
-            words = line.split("[\\s\\.\\-\\d+-.,!@#$%^&*();\\\\/|<>\"']+");
+            words = line.split("[\\s\\.\\-\\d+-.,!@#$%^&*();\\\\/|<>\"']+");//"[\\d\\W]+");
             for (int i = 0; i < words.length ; i++) {
                 String currentWord = words[i].toLowerCase();
                 if(wc.allWords.containsKey(currentWord)) {
