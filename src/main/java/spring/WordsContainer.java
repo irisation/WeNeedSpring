@@ -10,6 +10,12 @@ public class WordsContainer {
     HashMap<String, Integer> topTen;
     HashMap<String, Integer> allWords;
 
+    public WordsContainer(String fileName) {
+        this.fileName = fileName;
+        topTen = new HashMap<>(10);
+        allWords = new HashMap<>();
+    }
+
     public void setWordsCount(int wordsCount) {
         this.wordsCount = wordsCount;
     }
@@ -20,13 +26,6 @@ public class WordsContainer {
 
     public void setAllWords(HashMap<String, Integer> allWords) {
         this.allWords = allWords;
-    }
-
-    public WordsContainer(String s) {
-        setFileName(s);
-        allWords = new HashMap<>();
-        topTen = new HashMap<>(10);
-
     }
 
     public void setFileName(String fileName) {

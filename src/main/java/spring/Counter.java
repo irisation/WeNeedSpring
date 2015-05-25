@@ -9,49 +9,22 @@ import java.util.*;
 
 public class Counter {
 
-    String root = "D:\\Students\\";
-    enum Propositions{at, on, in, of }
-    WordsContainer wc;
+    enum Prepositions {on, in, at, since, ago, before, to, past, till, until, by, under, below, over, above, across, through, into, towards, onto, from, off, about, of}
+
     String storageType;
+    String filePath;
 
-    public WordsContainer getWc() {
-        return wc;
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 
-    public void setWc(WordsContainer wc) {
-        this.wc = wc;
+    Counter(String filePath) {
+        setFilePath(filePath);
     }
 
-    Counter(WordsContainer wc){
-        setWc(this.wc);
-    }
-
-    static Map sortByValue(Map map) {
-        List list = new LinkedList(map.entrySet());
-        Collections.sort(list, new Comparator() {
-            public int compare(Object o1, Object o2) {
-                return ((Comparable) ((Map.Entry) (o2)).getValue())
-                        .compareTo(((Map.Entry) (o1)).getValue());
-            }
-        });
-
-        Map result = new LinkedHashMap();
-        int i = 0;
-        int j = 0;
-        while( j < 10 && i < list.size()) {
-            Map.Entry entry = (Map.Entry)list.get(i);
-            if(!EnumUtils.isValidEnum(Propositions.class, (String) entry.getKey())){
-                result.put(entry.getKey(), entry.getValue());
-                j++;
-            }
-            i++;
-        }
-        return result;
-    }
-
-
-    public void readFile(WordsContainer wc) throws IOException {
-        BufferedReader in = new BufferedReader(new FileReader(root + wc.getFileName()));
+    public WordsContainer parse() throws IOException {
+        WordsContainer wc = new WordsContainer(filePath);
+        BufferedReader in = new BufferedReader(new FileReader(filePath));
         String line = in.readLine();
         String[] words;
         while (line != null) {
@@ -66,10 +39,32 @@ public class Counter {
             }
             line = in.readLine();
         }
-
         wc.setTopTen((HashMap<String, Integer>) sortByValue(wc.allWords));
         wc.setWordsCount(wc.allWords.size());
+        return wc;
+
 
      }
 
+    static Map sortByValue(Map map) {
+        List list = new LinkedList(map.entrySet());
+        Collections.sort(list, new Comparator() {
+            public int compare(Object o1, Object o2) {
+                return ((Comparable) ((Map.Entry) (o2)).getValue())
+                        .compareTo(((Map.Entry) (o1)).getValue());
+            }
+        });
+        Map result = new LinkedHashMap();
+        int i = 0;
+        int j = 0;
+        while (j < 10 && i < list.size()) {
+            Map.Entry entry = (Map.Entry) list.get(i);
+            if (!EnumUtils.isValidEnum(Prepositions.class, (String) entry.getKey())) {
+                result.put(entry.getKey(), entry.getValue());
+                j++;
+            }
+            i++;
+        }
+        return result;
+    }
 }

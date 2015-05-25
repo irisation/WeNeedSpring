@@ -1,6 +1,7 @@
 package spring;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.springframework.context.ApplicationContext;
@@ -21,17 +22,17 @@ public class Main {
 //        scanner.close();
 
 //        ApplicationContext ctx = new FileSystemXmlApplicationContext("context.xml");
+
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(new String[]{"context.xml"});
-        Counter controller = (Counter) ctx.getBean("counter");
-        WordsContainer text = (WordsContainer) ctx.getBean("wordsContainer");
-        controller.readFile(text);
+        CountService controller = (CountService) ctx.getBean("countService");
+        ArrayList<WordsContainer> array = controller.start();
+        for (int i = 0; i < array.size(); i++) {
+            System.out.println(array.get(i).wordsCount + " " + array.get(i).topTen);
+        }
+//        WordsContainer text = (WordsContainer) ctx.getBean("wordsContainer");
+//        controller.countWordsInFile(text);
 
 
-//        WordsContainer text = new WordsContainer(filename);
-//        Counter counter = new Counter(text);
-//        counter.readFile(text);
-        System.out.println(text.wordsCount);
-        System.out.println(text.topTen);
 
 
     }
