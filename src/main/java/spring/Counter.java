@@ -14,8 +14,16 @@ public class Counter {
     WordsContainer wc;
     String storageType;
 
-    Counter(WordsContainer wc){
+    public WordsContainer getWc() {
+        return wc;
+    }
+
+    public void setWc(WordsContainer wc) {
         this.wc = wc;
+    }
+
+    Counter(WordsContainer wc){
+        setWc(this.wc);
     }
 
     static Map sortByValue(Map map) {
@@ -59,7 +67,7 @@ public class Counter {
             line = in.readLine();
         }
 
-        wc.setTopTen((HashMap<String,Integer>)sortByValue(wc.allWords));
+        wc.setTopTen((HashMap<String, Integer>) sortByValue(wc.allWords));
         wc.setWordsCount(wc.allWords.size());
 
      }

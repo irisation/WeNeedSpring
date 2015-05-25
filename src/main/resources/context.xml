@@ -6,13 +6,13 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
     <bean id="counter" class="spring.Counter">
-        <constructor-arg type="java.lang.String" value="input.txt">
+        <constructor-arg type="spring.WordsContainer">
             <ref bean="wordsContainer" />
         </constructor-arg>
 
     </bean>
 
     <bean class="spring.WordsContainer" id="wordsContainer">
-        <property name="fileName" value="input.txt"/>
+        <constructor-arg type="java.lang.String" value="input.txt"/>
     </bean>
 </beans>
