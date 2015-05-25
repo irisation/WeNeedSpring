@@ -21,7 +21,7 @@ public class Main {
             filename= scanner.nextLine();
         }
         scanner.close();
-//        ApplicationContext ctx = new FileSystemXmlApplicationContext("temp.xml");
+//        ApplicationContext ctx = new FileSystemXmlApplicationContext("context.xml");
 //        Counter controller = (Counter)ctx.getBean("counter");
 //        WordsContainer text = (WordsContainer)ctx.getBean("wordsContainer");
 //        controller.readFile(text);
