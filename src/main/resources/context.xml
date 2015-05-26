@@ -10,7 +10,7 @@
         <property name="folderPath" value="D:\\Students\\"/>
         <property name="storageType" value="xml"/>
     </bean>
-    <bean id="countersFactory" class="spring.CountersFactory">
+    <bean id="countersFactory" class="spring.CountersFactory" scope="singleton">
         <lookup-method name="getCounter" bean="counter"/>
     </bean>
     <bean id="counter" class="spring.Counter" scope="prototype" lazy-init="true"/>
