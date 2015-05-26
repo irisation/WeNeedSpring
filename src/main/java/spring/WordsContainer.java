@@ -7,6 +7,14 @@ public class WordsContainer {
     String fileName;
     int wordsCount;
 
+    public HashMap<String, Integer> getTopTen() {
+        return topTen;
+    }
+
+    public int getWordsCount() {
+        return wordsCount;
+    }
+
     HashMap<String, Integer> topTen;
     HashMap<String, Integer> allWords;
 
