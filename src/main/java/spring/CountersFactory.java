@@ -1,8 +1,8 @@
 package spring;
 
-public class CountersFactory {
+public abstract class CountersFactory {
 
-    public static Counter getCounter(String filePath) {
-        return new Counter(filePath);
-    }
+    public abstract Counter getCounter(String filePath);
+    //return new Counter(filePath);
+
 }

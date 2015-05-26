@@ -14,7 +14,7 @@ public class Counter {
         through, into, towards, onto, from, off, about, of
     }
 
-    String storageType;
+
     String filePath;
 
     public void setFilePath(String filePath) {
