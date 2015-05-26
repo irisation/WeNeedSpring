@@ -5,13 +5,15 @@
 
 
 	<bean class="spring.CountService" id="countService">
-		<property name="folderPath" value="D:\\Students\\"/>
+		<property name="folderPath" value="D:\\checks\\"/>
 		<property name="storageType" value="xml"/>
 		<property name="countersFactory" ref="countersFactory"/>
 	</bean>
-	<bean id="countersFactory" class="spring.CountersFactory" scope="singleton">
+
+	<bean id="countersFactory" class="spring.CountersFactory">
 		<lookup-method name="getCounter" bean="counter"/>
 	</bean>
+
 	<bean id="counter" class="spring.Counter" scope="prototype" lazy-init="true"/>
 
 </beans>

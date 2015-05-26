@@ -46,7 +46,8 @@ public class CountService
 		{
 			if (!fileEntry.isDirectory())
 			{
-				Counter counter = countersFactory.getCounter(getFolderPath() + fileEntry.getName());
+				Counter counter = countersFactory.getCounter();
+				counter.setFilePath(getFolderPath() + fileEntry.getName());
 				wordsContainers.add(counter.parse());
 			}
 		}
