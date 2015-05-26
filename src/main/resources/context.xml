@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-    <bean class="spring.CountService" id="countService">
-        <property name="folderPath" value="D:\\Students\\"/>
-        <property name="storageType" value="xml"/>
-    </bean>
-    <bean id="countersFactory" class="spring.CountersFactory" scope="singleton">
-        <lookup-method name="getCounter" bean="counter"/>
-    </bean>
-    <bean id="counter" class="spring.Counter" scope="prototype" lazy-init="true"/>
+	<bean class="spring.CountService" id="countService">
+		<property name="folderPath" value="D:\\Students\\"/>
+		<property name="storageType" value="xml"/>
+		<property name="countersFactory" ref="countersFactory"/>
+	</bean>
+	<bean id="countersFactory" class="spring.CountersFactory" scope="singleton">
+		<lookup-method name="getCounter" bean="counter"/>
+	</bean>
+	<bean id="counter" class="spring.Counter" scope="prototype" lazy-init="true"/>
 
 </beans>
