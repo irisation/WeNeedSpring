@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
@@ -14,6 +14,36 @@
 		<lookup-method name="getCounter" bean="counter"/>
 	</bean>
 
-	<bean id="counter" class="spring.Counter" scope="prototype" lazy-init="true"/>
+	<bean id="counter" class="spring.Counter" scope="prototype" lazy-init="true">
+		<property name="prepositions">
+			<list>
+				<value>at</value>
+				<value>for</value>
+				<value>on</value>
+				<value>in</value>
+				<value>since</value>
+				<value>ago</value>
+				<value>before</value>
+				<value>to</value>
+				<value>past</value>
+				<value>till</value>
+				<value>until</value>
+				<value>by</value>
+				<value>under</value>
+				<value>below</value>
+				<value>over</value>
+				<value>above</value>
+				<value>across</value>
+				<value>through</value>
+				<value>into</value>
+				<value>towards</value>
+				<value>onto</value>
+				<value>from</value>
+				<value>off</value>
+				<value>about</value>
+				<value>of</value>
+			</list>
+		</property>
+	</bean>
 
 </beans>

@@ -3,13 +3,7 @@ package spring;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.commons.lang3.EnumUtils;
 
@@ -17,39 +11,37 @@ import org.apache.commons.lang3.EnumUtils;
 public class Counter
 {
 
-	enum Prepositions
-	{
-		on, in, at, since, ago, before, to, past, till, until, by, under, below, over, above, across, through, into, towards, onto, from, off, about, of
-	}
+    static ArrayList<String> prepositions;
 
+    public static void setPrepositions(ArrayList<String> preps) {
+        prepositions = preps;
+    }
 
-	String filePath;
+    String filePath;
 
 	public void setFilePath(String filePath)
 	{
 		this.filePath = filePath;
 	}
 
-
-
-	public WordsContainer parse() throws IOException
-	{
+    public WordsContainer parse() throws IOException {
 		WordsContainer wc = new WordsContainer(filePath);
 		BufferedReader in = new BufferedReader(new FileReader(filePath));
 		String line = in.readLine();
 		String[] words;
         while (line != null) {
-            if (!line.isEmpty()) {
                 words = line.split("[\\d\\W]+");
                 for (int i = 0; i < words.length; i++) {
-                    String currentWord = words[i].toLowerCase();
-                    if (wc.allWords.containsKey(currentWord)) {
-                        wc.allWords.put(currentWord, wc.allWords.get(currentWord) + 1);
-                    } else {
-                        wc.allWords.put(currentWord, 1);
+                    if (!words[i].isEmpty()) {
+                        String currentWord = words[i].toLowerCase();
+                        if (wc.allWords.containsKey(currentWord)) {
+                            wc.allWords.put(currentWord, wc.allWords.get(currentWord) + 1);
+                        } else {
+                            wc.allWords.put(currentWord, 1);
+                        }
                     }
                 }
-			}
+
 			line = in.readLine();
 		}
 		wc.setTopTen((HashMap<String, Integer>) sortByValue(wc.allWords));
@@ -75,8 +67,8 @@ public class Counter
 		while (j < 10 && i < list.size())
 		{
 			Map.Entry entry = (Map.Entry) list.get(i);
-			if (!EnumUtils.isValidEnum(Prepositions.class, (String) entry.getKey()))
-			{
+            if (!prepositions.contains(entry.getKey()))//EnumUtils.isValidEnum(Prepositions.class, (String) entry.getKey()))
+            {
 				result.put(entry.getKey(), entry.getValue());
 				j++;
 			}
