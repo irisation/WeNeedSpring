@@ -1,5 +1,6 @@
 package spring;
 
+import org.codehaus.jackson.map.SerializationConfig;
 import org.json.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -19,7 +20,6 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.*;
 
 public class CountService
@@ -57,7 +57,7 @@ public class CountService
 		ArrayList<WordsContainer> wordsContainers = new ArrayList<>();
 		for (final File fileEntry : folder.listFiles())
 		{
-			if (!fileEntry.isDirectory())
+			if (fileEntry.isFile())
 			{
 				Counter counter = countersFactory.getCounter();
 				counter.setFilePath(getFolderPath() + fileEntry.getName());
@@ -72,7 +72,6 @@ public class CountService
 		switch (storageType) {
 			case "xml": {
 				try {
-
 					DocumentBuilderFactory dFact = DocumentBuilderFactory.newInstance();
 					DocumentBuilder build = dFact.newDocumentBuilder();
 					Document doc = build.newDocument();
@@ -128,7 +127,7 @@ public class CountService
 
 					DOMSource source = new DOMSource(doc);
 					try {
-						FileWriter fos = new FileWriter("D:\\temp.xml");
+						FileWriter fos = new FileWriter("D:/temp.xml");
 						StreamResult result = new StreamResult(fos);
 						aTransformer.transform(source, result);
 
@@ -147,21 +146,11 @@ public class CountService
 				break;
 			}
 			case "json": {
-				File file = new File("D:\\temp.txt");
-
-				for (int i = 0; i < arrayList.size(); i++) {
-
-
+				File file = new File("D:/temp.json");
+				try {
 					ObjectMapper mapper = new ObjectMapper();
-
-					try {
-
-						// convert user object to json string, and save to a file
-						mapper.writeValue(file, arrayList.get(i));
-
-						// display to console
-						System.out.println(mapper.writeValueAsString(arrayList.get(i)));
-
+					mapper.enable(SerializationConfig.Feature.INDENT_OUTPUT);
+					mapper.writeValue(file, arrayList);
 					} catch (JsonGenerationException e) {
 
 						e.printStackTrace();
@@ -175,7 +164,6 @@ public class CountService
 						e.printStackTrace();
 
 					}
-				}
 				break;
 			}
 			default:

@@ -5,8 +5,8 @@
 
 
 	<bean class="spring.CountService" id="countService">
-		<property name="folderPath" value="D:\\Students\\"/>
-		<property name="storageType" value="xml"/>
+		<property name="folderPath" value="D:/Students/"/>
+		<property name="storageType" value="json"/>
 		<property name="countersFactory" ref="countersFactory"/>
 	</bean>
 
