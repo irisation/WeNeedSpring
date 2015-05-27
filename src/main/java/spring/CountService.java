@@ -112,7 +112,6 @@ public class CountService
 
 					}
 
-
 					// Save the document to the disk file
 					TransformerFactory tranFactory = TransformerFactory.newInstance();
 					Transformer aTransformer = tranFactory.newTransformer();

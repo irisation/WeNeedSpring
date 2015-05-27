@@ -38,20 +38,17 @@ public class Counter
 		BufferedReader in = new BufferedReader(new FileReader(filePath));
 		String line = in.readLine();
 		String[] words;
-		while (line != null)
-		{
-			words = line.split("[\\s\\.\\-\\d+-.,!@#$%^&*();\\\\/|<>\"']+");//"[\\d\\W]+");
-			for (int i = 0; i < words.length; i++)
-			{
-				String currentWord = words[i].toLowerCase();
-				if (wc.allWords.containsKey(currentWord))
-				{
-					wc.allWords.put(currentWord, wc.allWords.get(currentWord) + 1);
-				}
-				else
-				{
-					wc.allWords.put(currentWord, 1);
-				}
+        while (line != null) {
+            if (!line.isEmpty()) {
+                words = line.split("[\\d\\W]+");
+                for (int i = 0; i < words.length; i++) {
+                    String currentWord = words[i].toLowerCase();
+                    if (wc.allWords.containsKey(currentWord)) {
+                        wc.allWords.put(currentWord, wc.allWords.get(currentWord) + 1);
+                    } else {
+                        wc.allWords.put(currentWord, 1);
+                    }
+                }
 			}
 			line = in.readLine();
 		}
