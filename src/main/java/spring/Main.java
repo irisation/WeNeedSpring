@@ -4,12 +4,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import org.json.JSONException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, JSONException {
 
 
 //        Scanner scanner = new Scanner(System.in);

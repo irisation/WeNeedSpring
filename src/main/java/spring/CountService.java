@@ -1,9 +1,12 @@
 package spring;
 
-
+import org.json.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -16,6 +19,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.*;
 
 public class CountService
@@ -48,8 +52,7 @@ public class CountService
 		this.folderPath = folderPath;
 	}
 
-	ArrayList<WordsContainer> start() throws IOException
-	{
+	ArrayList<WordsContainer> start() throws IOException, JSONException {
 		File folder = new File(this.folderPath);
 		ArrayList<WordsContainer> wordsContainers = new ArrayList<>();
 		for (final File fileEntry : folder.listFiles())
@@ -65,7 +68,7 @@ public class CountService
 		return wordsContainers;
 	}
 
-	public void writeFile(ArrayList<WordsContainer> arrayList) {
+	public void writeFile(ArrayList<WordsContainer> arrayList) throws IOException, JSONException {
 		switch (storageType) {
 			case "xml": {
 				try {
@@ -101,14 +104,8 @@ public class CountService
 						List list = new LinkedList(arrayList.get(i).topTen.entrySet());
 						for (Object entry : list) {
 							Element word = doc.createElement("word");
-
-							Element spelling = doc.createElement("spelling");
-							spelling.appendChild(doc.createTextNode((String) ((Map.Entry) entry).getKey()));
-							word.appendChild(spelling);
-
-							Element quantity = doc.createElement("quantity");
-							quantity.appendChild(doc.createTextNode(String.valueOf(((Map.Entry) entry).getValue())));
-							word.appendChild(quantity);
+							word.setAttribute("quantity", String.valueOf(((Map.Entry) entry).getValue()));
+							word.appendChild(doc.createTextNode((String) ((Map.Entry) entry).getKey()));
 
 							topTen.appendChild(word);
 							file.appendChild(topTen);
@@ -150,6 +147,35 @@ public class CountService
 				break;
 			}
 			case "json": {
+				File file = new File("D:\\temp.txt");
+
+				for (int i = 0; i < arrayList.size(); i++) {
+
+
+					ObjectMapper mapper = new ObjectMapper();
+
+					try {
+
+						// convert user object to json string, and save to a file
+						mapper.writeValue(file, arrayList.get(i));
+
+						// display to console
+						System.out.println(mapper.writeValueAsString(arrayList.get(i)));
+
+					} catch (JsonGenerationException e) {
+
+						e.printStackTrace();
+
+					} catch (JsonMappingException e) {
+
+						e.printStackTrace();
+
+					} catch (IOException e) {
+
+						e.printStackTrace();
+
+					}
+				}
 				break;
 			}
 			default:
