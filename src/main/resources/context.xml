@@ -37,6 +37,7 @@
 	<bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
 		<property name="classesToBeBound">
 			<list>
+				<value>spring.Containers</value>
 				<value>spring.WordsContainer</value>
 			</list>
 		</property>
