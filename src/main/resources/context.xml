@@ -1,8 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
-	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util.xsd">
 
+	<util:list id="prepositions">
+		<value>at</value>
+		<value>for</value>
+		<value>on</value>
+		<value>in</value>
+		<value>since</value>
+		<value>ago</value>
+		<value>before</value>
+		<value>to</value>
+		<value>past</value>
+		<value>till</value>
+		<value>until</value>
+		<value>by</value>
+		<value>under</value>
+		<value>below</value>
+		<value>over</value>
+		<value>above</value>
+		<value>across</value>
+		<value>through</value>
+		<value>into</value>
+		<value>towards</value>
+		<value>onto</value>
+		<value>from</value>
+		<value>off</value>
+		<value>about</value>
+		<value>of</value>
+	</util:list>
 
 	<bean class="spring.CountService" id="countService">
 		<property name="folderPath" value="D:/Students/"/>
@@ -15,35 +43,9 @@
 	</bean>
 
 	<bean id="counter" class="spring.Counter" scope="prototype" lazy-init="true">
-		<property name="prepositions">
-			<list>
-				<value>at</value>
-				<value>for</value>
-				<value>on</value>
-				<value>in</value>
-				<value>since</value>
-				<value>ago</value>
-				<value>before</value>
-				<value>to</value>
-				<value>past</value>
-				<value>till</value>
-				<value>until</value>
-				<value>by</value>
-				<value>under</value>
-				<value>below</value>
-				<value>over</value>
-				<value>above</value>
-				<value>across</value>
-				<value>through</value>
-				<value>into</value>
-				<value>towards</value>
-				<value>onto</value>
-				<value>from</value>
-				<value>off</value>
-				<value>about</value>
-				<value>of</value>
-			</list>
-		</property>
+		<property ref="prepositions" name="prepositions"/>
+
+
 	</bean>
 
 </beans>
