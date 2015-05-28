@@ -2,23 +2,21 @@ package spring;
 
 import org.codehaus.jackson.map.SerializationConfig;
 import org.json.*;
+//import org.springframework.oxm.Marshaller;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;//org.springframework.oxm.Marshaller;
+
+import org.springframework.oxm.Unmarshaller;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
+
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -27,6 +25,17 @@ public class CountService
 
 	private String folderPath;
 	private String storageType;
+
+	private Jaxb2Marshaller marshaller;
+	private Unmarshaller unmarshaller;
+
+	public void setMarshaller(Jaxb2Marshaller marshaller) {
+		this.marshaller = marshaller;
+	}
+
+	public void setUnmarshaller(Unmarshaller unmarshaller) {
+		this.unmarshaller = unmarshaller;
+	}
 
 	private CountersFactory countersFactory;
 
@@ -52,6 +61,19 @@ public class CountService
 		this.folderPath = folderPath;
 	}
 
+	public void saveSettings(WordsContainer arrayList) throws IOException {
+		FileOutputStream os = null;
+		try {
+			os = new FileOutputStream("D:/customer.xml");
+
+			this.marshaller.marshal(arrayList, new StreamResult(os));
+		} finally {
+			if (os != null) {
+				os.close();
+			}
+		}
+	}
+
 	ArrayList<WordsContainer> start() throws IOException, JSONException {
 		File folder = new File(this.folderPath);
 		ArrayList<WordsContainer> wordsContainers = new ArrayList<>();
@@ -71,77 +93,67 @@ public class CountService
 	public void writeFile(ArrayList<WordsContainer> arrayList) throws IOException, JSONException {
 		switch (storageType) {
 			case "xml": {
-				try {
-					DocumentBuilderFactory dFact = DocumentBuilderFactory.newInstance();
-					DocumentBuilder build = dFact.newDocumentBuilder();
-					Document doc = build.newDocument();
 
-					Element root = doc.createElement("FilesInfo");
-					doc.appendChild(root);
-
-					Element details = doc.createElement("Details");
-					root.appendChild(details);
-
-
-					for (int i = 0; i < arrayList.size(); i++) {
-
-						Element file = doc.createElement("file");
-						details.appendChild(file);
-
-						Element fileName = doc.createElement("fileName");
-						fileName.appendChild(doc.createTextNode(arrayList.get(i).getFileName()));
-						file.appendChild(fileName);
-
-						Element count = doc.createElement("countOfWords");
-						count.appendChild(doc.createTextNode(String.valueOf(arrayList.get(i).getWordsCount())));
-						file.appendChild(count);
-
-
-						Element topTen = doc.createElement("topTen");
-
-
-						List list = new LinkedList(arrayList.get(i).topTen.entrySet());
-						for (Object entry : list) {
-							Element word = doc.createElement("word");
-							word.setAttribute("quantity", String.valueOf(((Map.Entry) entry).getValue()));
-							word.appendChild(doc.createTextNode((String) ((Map.Entry) entry).getKey()));
-
-							topTen.appendChild(word);
-							file.appendChild(topTen);
-						}
-
-					}
-
-					// Save the document to the disk file
-					TransformerFactory tranFactory = TransformerFactory.newInstance();
-					Transformer aTransformer = tranFactory.newTransformer();
-
-					// format the XML nicely
-					aTransformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
-
-					aTransformer.setOutputProperty(
-							"{http://xml.apache.org/xslt}indent-amount", "4");
-					aTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
-
-
-					DOMSource source = new DOMSource(doc);
-					try {
-						FileWriter fos = new FileWriter("D:/temp.xml");
-						StreamResult result = new StreamResult(fos);
-						aTransformer.transform(source, result);
-
-					} catch (IOException e) {
-
-						e.printStackTrace();
-					}
+				saveSettings(arrayList.get(0));
+//					DocumentBuilderFactory dFact = DocumentBuilderFactory.newInstance();
+//					DocumentBuilder build = dFact.newDocumentBuilder();
+//					Document doc = build.newDocument();
+//
+//					Element root = doc.createElement("FilesInfo");
+//					doc.appendChild(root);
+//
+//					Element details = doc.createElement("Details");
+//					root.appendChild(details);
+//
+//
+//					for (int i = 0; i < arrayList.size(); i++) {
+//
+//						Element file = doc.createElement("file");
+//						details.appendChild(file);
+//
+//						Element fileName = doc.createElement("fileName");
+//						fileName.appendChild(doc.createTextNode(arrayList.get(i).getFileName()));
+//						file.appendChild(fileName);
+//
+//						Element count = doc.createElement("countOfWords");
+//						count.appendChild(doc.createTextNode(String.valueOf(arrayList.get(i).getWordsCount())));
+//						file.appendChild(count);
+//
+//
+//						Element topTen = doc.createElement("topTen");
+//
+//
+//						List list = new LinkedList(arrayList.get(i).topTen.entrySet());
+//						for (Object entry : list) {
+//							Element word = doc.createElement("word");
+//							word.setAttribute("quantity", String.valueOf(((Map.Entry) entry).getValue()));
+//							word.appendChild(doc.createTextNode((String) ((Map.Entry) entry).getKey()));
+//
+//							topTen.appendChild(word);
+//							file.appendChild(topTen);
+//						}
+//
+//					}
+//
+//					// Save the document to the disk file
+//					TransformerFactory tranFactory = TransformerFactory.newInstance();
+//					Transformer aTransformer = tranFactory.newTransformer();
+//
+//					// format the XML nicely
+//					aTransformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
+//
+//					aTransformer.setOutputProperty(
+//							"{http://xml.apache.org/xslt}indent-amount", "4");
+//					aTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
+//
+//
+//					DOMSource source = new DOMSource(doc);
+//					try {
+//						FileWriter fos = new FileWriter("D:/temp.xml");
+//						StreamResult result = new StreamResult(fos);
+//						aTransformer.transform(source, result);
 
 
-				} catch (TransformerException ex) {
-					System.out.println("Error outputting document");
-
-				} catch (ParserConfigurationException ex) {
-					System.out.println("Error building document");
-				}
 				break;
 			}
 			case "json": {
